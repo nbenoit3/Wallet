@@ -8,7 +8,7 @@ import Login from "./Login";
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>WheresMyWallet App</Text>
-                <Button title="login" onPress={() => this.props.navigation.navigate('Dashboard')}></Button>
+                <Button title="login" onPress={() => this.props.navigation.navigate('Login')}></Button>
                 <Button title="signup" onPress={() => this.props.navigation.navigate('Register')}></Button>
             </View>
         )

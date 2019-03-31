@@ -1,33 +1,56 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import { Input } from 'react-native-elements';
 import { connect } from "react-redux";
 import mapDispatchToProps from '../Actions/actionCreators';
 import Axios from 'axios';
 
 
  class Login extends Component {
-
-    //     let user = {
-    //         username: document.getElementById("loginUsername").value,
-    //         password: document.getElementById("loginPassword").value
-    //     }
+     constructor() {
+         super();
         
-        // axios.post("/users/login", user)
-        // .then(res => {
-        //     var loggedInUser = res.data.username;
-        //     login(loggedInUser);
-        //     history.push("/Home")
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // });
+         this.state = {
+            username: "",
+            password: ""
+         }
+     }
+     componentDidMount() {
+
+    }
+  
+    componentWillUnmount() {
+  
+    }
+
+     handleLogin = async (e) => {
+        let user = this.state;
+        let {userLoggedIn} = this.props;
+        console.log(userLoggedIn);
+
+        let data = await Axios.post("http://localhost:3001/users/login", user);
+        console.log(data);
+        let currentUser = data.data.username;
+        let currentUserID = data.data.id;
+        console.log(currentUserID);
+        if (currentUser == "") {
+            alert("Incorrect username");
+            
+        }
+        alert(`Logging in with ${currentUser}`);
+        userLoggedIn(currentUserID);
+        this.props.navigation.navigate('Dashboard');
+
+     }
+
     
     render() {
         return (
             <View style={styles.container}>
-                    <TextInput style={styles.inputBox} placeholder="Username" id="loginUsername"></TextInput>
-                    <TextInput style={styles.inputBox} placeholder="Password" id="loginPassword"></TextInput>
-                    <Button title="Login" onPress={(e) => {loginUser(e)}}/>
+                    <Button title="Go Back" onPress={() => this.props.navigation.navigate('Home')}></Button>
+                    <Input style={styles.inputBox} autoCapitalize="none" placeholder="Username" onChangeText={(username) => this.setState({username: username})}></Input>
+                    <Input style={styles.inputBox} autoCapitalize="none" placeholder="Password" onChangeText={(password) => this.setState({password: password})}></Input>
+                    <Button title="Login" onPress={(e) => {this.handleLogin(e)}}/>
                 
             </View>
         )
@@ -54,4 +77,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

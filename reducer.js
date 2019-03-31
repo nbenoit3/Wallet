@@ -1,31 +1,26 @@
+
 export const initialState = {
     isLoggedIn: false,
-    entries: [{
-        website: "",
-        cardNumber: "",
-        expirationDate: "",
-        securityCode: "",
-        username: "",
-        password: ""
-    }],
     loggedInUser: "",
-    loggedInUserID: ""
+    loggedInUserID: "",
+    currentListOfEnt: []
 
 
 }
 
 const reducer = (state = initialState, action) => {
-    const { type, payload1, payload2 } = action;
+    const { type, payload } = action;
     switch(type) {
         case "USER_LOGGED_IN":
-        return {...state, loggedInUser: payload1, loggedInUserID: payload2}
-        break;
-
+            return {...state, loggedInUserID: payload}
+            break;
         case "USER_LOGOUT":
-        return {...state, loggedInUser: "", loggedInUserID: ""}
-        break;
+            return {...state, loggedInUser: "", loggedInUserID: ""}
+            break;
+            default:
+                return state;
     }
-    return state;
+    
 }
 
 

@@ -15,6 +15,13 @@ import Axios from 'axios';
             password: ""
         }
     }
+    componentDidMount() {
+
+    }
+  
+    componentWillUnmount() {
+  
+    }
 
    registerUser = (e) => {
        let user = this.state;
