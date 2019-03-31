@@ -63,7 +63,8 @@ const AppSwitchNavigator = createSwitchNavigator({
   Home: { screen: Homescreen },
   Dashboard: {screen: AppDrawNavigator},
   Register: {screen: Register},
-  CreateEntry: {screen: CreateEntry}
+  CreateEntry: {screen: CreateEntry},
+  Login: {screen: Login}
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

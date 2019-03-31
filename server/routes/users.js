@@ -2,10 +2,14 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
 const db = require("../db");
+const passport = require("../passport");
 
 /* GET users listing. */
-router.get('/login', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/login', passport.authenticate('local'), function(req, res, next) {
+    console.log(req.user.username);
+    console.log(req.user.id);
+    console.log("you hit login route");
+    res.json({ id: req.user.id, username: req.user.username });
 });
 
 

@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 
 class CreateEntry extends Component {
-    constructor({userID}) {
+    constructor() {
         super()
         this.state = {
             website: "",
@@ -15,28 +15,39 @@ class CreateEntry extends Component {
             cardNumber: "",
             expirationDate: "",
             securityCode: "",
-            loggedInUser: userID
+            currentUserID: 0
         }
     }
+
+    componentDidMount() {
+        let userID = this.props.userID;
+        console.log(userID.currentUserID)
+        this.setState({currentUserID: userID.currentUserID});
+    }
+    
 
      handleCreateEntry =  async () => {
         let newEntry = this.state;
         console.log(newEntry);
+        
     let data = await Axios.post("http://localhost:3001/entry/new", newEntry)
+        
+        console.log(data)
         alert("You created a new entry");
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Dashboard');
     }
 
     render() {
         return (
             <View style={styles.container}>
+                <Button title="Go Back" onPress={() => this.props.navigation.navigate('Dashboard')}></Button>
                 <Text style={styles.header}>Enter the website or card information below</Text>
-                <Input placeholder='Website' onChangeText={(text) => this.setState({website: text})}/>
-                <Input placeholder='Username' onChangeText={(text) => this.setState({username: text})}/>
-                <Input placeholder='Password' onChangeText={(text) => this.setState({password: text})}/>
-                <Input placeholder='Card Number' onChangeText={(text) => this.setState({cardNumber: text})}/>
-                <Input placeholder='Expiration Date' onChangeText={(text) => this.setState({expirationDate: text})}/>
-                <Input placeholder='Security Code' onChangeText={(text) => this.setState({securityCode: text})}/>
+                <Input placeholder='Website' autoCapitalize="none" onChangeText={(text) => this.setState({website: text})}/>
+                <Input placeholder='Username' autoCapitalize="none" onChangeText={(text) => this.setState({username: text})}/>
+                <Input placeholder='Password' autoCapitalize="none" onChangeText={(text) => this.setState({password: text})}/>
+                <Input placeholder='Card Number' autoCapitalize="none" onChangeText={(text) => this.setState({cardNumber: text})}/>
+                <Input placeholder='Expiration Date in format: yyyy-mm' autoCapitalize="none" onChangeText={(text) => this.setState({expirationDate: text})}/>
+                <Input placeholder='Security Code' autoCapitalize="none" onChangeText={(text) => this.setState({securityCode: text})}/>
                 <Button style={styles.button} color="#841584" title="Create Entry" onPress={this.handleCreateEntry}></Button>
             </View>
         )
